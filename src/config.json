@@ -32,7 +32,57 @@
   "CLOCK_PORT": "clk",
 
   "//": "Configuration docs: https://librelane.readthedocs.io/en/latest/reference/configuration.html",
+  "//": "IHP SG13G2 256x8 SRAM macro integration",
 
+  "meta": {
+    "flow": "Classic",
+    "substituting_steps": {
+      "+OpenROAD.GeneratePDN": "Project.ExtendPowerStripes"
+    }
+  },
+
+  "MACROS": {
+    "RM_IHPSG13_1P_256x8_c3_bm_bist": {
+      "instances": {
+        "cpu.data_ram": {
+          "location": [3.36, 3.78],
+          "orientation": "FS"
+        }
+      },
+      "gds": [
+        "pdk_dir::libs.ref/sg13g2_sram/gds/RM_IHPSG13_1P_256x8_c3_bm_bist.gds"
+      ],
+      "lef": [
+        "pdk_dir::libs.ref/sg13g2_sram/lef/RM_IHPSG13_1P_256x8_c3_bm_bist.lef"
+      ],
+      "lib": {
+        "*_typ_*": [
+          "pdk_dir::libs.ref/sg13g2_sram/lib/RM_IHPSG13_1P_256x8_c3_bm_bist_typ_1p20V_25C.lib"
+        ],
+        "*_fast_*": [
+          "pdk_dir::libs.ref/sg13g2_sram/lib/RM_IHPSG13_1P_256x8_c3_bm_bist_fast_1p32V_m55C.lib"
+        ],
+        "*_slow_*": [
+          "pdk_dir::libs.ref/sg13g2_sram/lib/RM_IHPSG13_1P_256x8_c3_bm_bist_slow_1p08V_125C.lib"
+        ]
+      }
+    }
+  },
+
+  "PDN_MACRO_CONNECTIONS": [
+    "cpu.data_ram VPWR VGND VDD! VSS!",
+    "cpu.data_ram VPWR VGND VDDARRAY! VSS!"
+  ],
+
+  "PDN_CFG": "dir::pdn_cfg.tcl",
+
+  "EXTEND_STRIPES_SRAM_ARRAY_EVERY_OTHER": true,
+
+  "ERROR_ON_PDN_VIOLATIONS": 0,
+
+  "RUN_MAGIC_DRC": 0,
+
+  "ERROR_ON_ILLEGAL_OVERLAPS": 0,
   "//": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
   "//": "!!! DO NOT CHANGE ANYTHING BELOW THIS POINT !!!",
   "//": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
@@ -58,7 +108,7 @@
   "FP_IO_HLENGTH": 2,
   "FP_IO_VLENGTH": 2,
 
-  "FP_PDN_VPITCH": 38.87,
+  "FP_PDN_VPITCH": 44.96,
 
   "//": "Clock",
   "RUN_CTS": 1,
