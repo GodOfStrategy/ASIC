@@ -1,56 +1,51 @@
+
 # Tiny Tapeout project information
 project:
-  title:        ""      # Project title
-  author:       ""      # Your name
-  discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  ""      # One line description of what your project does
-  language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
-  clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
+  title: "Tiny8 - 8-Bit Processor"
+  author: "Shaurya Baitule"
+  discord: ""
+  description: "A custom 8-bit processor with a 16-bit instruction set, registers, arithmetic and memory operations."
+  language: "Verilog"
+  clock_hz: 12000000
 
-  # How many tiles your design occupies? A single tile is about 167x108 uM.
-  tiles: "1x1"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
+  # Initial area target. We will validate this during hardening.
+  tiles: "1x1"
 
-  # Your top module name must start with "tt_um_". Make it unique by including your github username:
-  top_module:  "tt_um_example"
+  top_module: "tt_um_godofstrategy_tiny8"
 
-  # List your project's source files here.
-  # Source files must be in ./src and you must list each source file separately, one per line.
-  # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
     - "project.v"
+    - "tiny8_top.v"
 
-# The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
-# This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
-  ui[2]: ""
-  ui[3]: ""
-  ui[4]: ""
-  ui[5]: ""
-  ui[6]: ""
-  ui[7]: ""
+  ui[0]: "CPU input bit 0"
+  ui[1]: "CPU input bit 1"
+  ui[2]: "CPU input bit 2"
+  ui[3]: "CPU input bit 3"
+  ui[4]: "CPU input bit 4"
+  ui[5]: "CPU input bit 5"
+  ui[6]: "CPU input bit 6"
+  ui[7]: "CPU input bit 7"
 
   # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
-  uo[6]: ""
-  uo[7]: ""
+  uo[0]: "CPU output bit 0"
+  uo[1]: "CPU output bit 1"
+  uo[2]: "CPU output bit 2"
+  uo[3]: "CPU output bit 3"
+  uo[4]: "CPU output bit 4"
+  uo[5]: "CPU output bit 5"
+  uo[6]: "CPU output bit 6"
+  uo[7]: "CPU output bit 7"
 
-  # Bidirectional pins
-  uio[0]: ""
-  uio[1]: ""
-  uio[2]: ""
-  uio[3]: ""
-  uio[4]: ""
-  uio[5]: ""
-  uio[6]: ""
-  uio[7]: ""
+  # Bidirectional pins used as program-counter outputs
+  uio[0]: "Program counter bit 0"
+  uio[1]: "Program counter bit 1"
+  uio[2]: "Program counter bit 2"
+  uio[3]: "Program counter bit 3"
+  uio[4]: "Program counter bit 4"
+  uio[5]: "Program counter bit 5"
+  uio[6]: "Program counter bit 6"
+  uio[7]: "Program counter bit 7"
 
-# Do not change!
 yaml_version: 6
