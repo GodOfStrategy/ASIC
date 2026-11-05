@@ -36,10 +36,8 @@
   "//": "IHP SG13G2 256x8 SRAM macro integration",
 
   "meta": {
-    "flow": "Classic",
-    "substituting_steps": {
-      "+OpenROAD.GeneratePDN": "Project.ExtendPowerStripes"
-    }
+  "flow": "Classic"
+},
   },
 
   "MACROS": {
@@ -71,9 +69,9 @@
   },
 
   "PDN_MACRO_CONNECTIONS": [
-    "cpu.data_ram VPWR VGND VDD! VSS!",
-    "cpu.data_ram VPWR VGND VDDARRAY! VSS!"
-  ],
+  "cpu.data_ram VDD VSS VDD! VSS!",
+  "cpu.data_ram VDD VSS VDDARRAY! VSS!"
+],
 
   "PDN_CFG": "dir::pdn_cfg.tcl",
 
