@@ -1,27 +1,52 @@
-/*
- * Copyright (c) 2024 Your Name
- * SPDX-License-Identifier: Apache-2.0
- */
 
 `default_nettype none
 
-module tt_um_example (
-    input  wire [7:0] ui_in,    // Dedicated inputs
-    output wire [7:0] uo_out,   // Dedicated outputs
-    input  wire [7:0] uio_in,   // IOs: Input path
-    output wire [7:0] uio_out,  // IOs: Output path
-    output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
-    input  wire       ena,      // always 1 when the design is powered, so you can ignore it
-    input  wire       clk,      // clock
-    input  wire       rst_n     // reset_n - low to reset
+module tt_um_godofstrategy_tiny8 (
+    input  wire       clk,
+    input  wire       rst_n,
+    input  wire       ena,
+
+    input  wire [7:0] ui_in,
+    output wire [7:0] uo_out,
+
+    input  wire [7:0] uio_in,
+    output wire [7:0] uio_out,
+    output wire [7:0] uio_oe
 );
 
-  // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
-  assign uio_out = 0;
-  assign uio_oe  = 0;
+    wire [7:0] debug_pc;
+    wire [15:0] debug_ir;
+    wire [3:0] debug_state;
+    wire [3:0] debug_flags;
+    wire debug_halted;
 
-  // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, 1'b0};
+    // Tiny8 processor
+    // The CPU uses an active-high reset.
+    tiny8_top cpu (
+        .clk(clk),
+        .rst((~rst_n) | (~ena)),
+        .port_in(ui_in),
+        .port_out(uo_out),
+        .debug_pc(debug_pc),
+        .debug_ir(debug_ir),
+        .debug_state(debug_state),
+        .debug_flags(debug_flags),
+        .debug_halted(debug_halted)
+    );
+
+    // Expose the program counter for debugging.
+    assign uio_out = debug_pc;
+    assign uio_oe  = 8'hFF;
+
+    // Unused input and debug signals.
+    wire unused_signals = ^{
+        uio_in,
+        debug_ir,
+        debug_state,
+        debug_flags,
+        debug_halted
+    };
 
 endmodule
+
+`default_nettype wire
