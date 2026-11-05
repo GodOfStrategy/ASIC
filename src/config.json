@@ -68,11 +68,13 @@
   },
 
   "PDN_MACRO_CONNECTIONS": [
-  "cpu.data_ram VDD VSS VDD! VSS!",
-  "cpu.data_ram VDD VSS VDDARRAY! VSS!"
+  "cpu.data_ram VPWR VGND VDD! VSS!",
+  "cpu.data_ram VPWR VGND VDDARRAY! VSS!"
 ],
 
   "PDN_CFG": "dir::pdn_cfg.tcl",
+  "MAGIC_MACRO_STD_CELL_SOURCE": "PDK",
+"MAGIC_EXT_ABSTRACT_CELLS": ["RM_IHPSG13_.*"],
 
   "EXTEND_STRIPES_SRAM_ARRAY_EVERY_OTHER": true,
 
