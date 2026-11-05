@@ -64,14 +64,32 @@ if { $::env(PDN_ENABLE_RAILS) == 1 } {
         -layers "$::env(PDN_RAIL_LAYER) $::env(PDN_VERTICAL_LAYER)"
 }
 
-# SRAM macro power grid: Metal4 to TopMetal1
+# SRAM macro power grid
+# The SRAM power pins are on Metal4.
+# Metal5 stripes bridge the SRAM pins to the chip-level TopMetal1 grid.
+
 define_pdn_grid \
     -macro \
-    -default \
-    -name macro \
-    -starts_with POWER \
-    -halo "$::env(PDN_HORIZONTAL_HALO) $::env(PDN_VERTICAL_HALO)"
+    -instances "cpu.data_ram" \
+    -name sram_grid \
+    -starts_with POWER
 
+# Dedicated Metal5 power and ground stripes over the SRAM.
+add_pdn_stripe \
+    -grid sram_grid \
+    -layer Metal5 \
+    -width 1.2 \
+    -pitch 11.24 \
+    -offset 2.81 \
+    -spacing 2.81 \
+    -starts_with POWER
+
+# Connect SRAM power pins to Metal5.
 add_pdn_connect \
-    -grid macro \
-    -layers "Metal4 $::env(PDN_VERTICAL_LAYER)"
+    -grid sram_grid \
+    -layers "Metal4 Metal5"
+
+# Connect Metal5 to the chip-level power grid.
+add_pdn_connect \
+    -grid sram_grid \
+    -layers "Metal5 $::env(PDN_VERTICAL_LAYER)"
