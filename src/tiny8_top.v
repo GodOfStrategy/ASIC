@@ -84,20 +84,23 @@ reg [3:0] state;
 // Shared procedural loop variable.
 // Used by the register-reset loop.
 integer i;
-
 // =====================================================
 // PROGRAM ROM
 // =====================================================
 
-reg [15:0] ROM [0:255];
 reg [15:0] rom_data;
 
-initial begin
-    $readmemh("program.hex", ROM);
-end
-
 always @(posedge clk) begin
-    rom_data <= ROM[PC];
+    case (PC)
+        8'd0: rom_data <= 16'h1005;
+        8'd1: rom_data <= 16'h1103;
+        8'd2: rom_data <= 16'h2204;
+        8'd3: rom_data <= 16'hEA00;
+        8'd4: rom_data <= 16'h0800;
+
+        // Unused addresses execute NOP.
+        default: rom_data <= 16'h0000;
+    endcase
 end
 
 // =====================================================
