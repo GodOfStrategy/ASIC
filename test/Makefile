@@ -6,7 +6,15 @@ SIM ?= icarus
 FST ?= -fst # Use more efficient FST format
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = project.v tiny8_top.v
+PROJECT_SOURCES = project.v tiny8_top.v sram_bb.v
+# IHP SRAM behavioural model for RTL simulation
+SRAM_MODEL = $(PWD)/models/RM_IHPSG13_1P_core_behavioral_bm_bist.v
+SRAM_WRAPPER = $(SRC_DIR)/RM_IHPSG13_1P_256x8_c3_bm_bist.v
+
+ifneq ($(GATES),yes)
+VERILOG_SOURCES += $(SRAM_MODEL) $(SRAM_WRAPPER)
+COMPILE_ARGS += -DFUNCTIONAL -DSIM
+endif
 ifneq ($(GATES),yes)
 
 # RTL simulation:
