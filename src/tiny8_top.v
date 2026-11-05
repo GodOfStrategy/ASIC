@@ -104,11 +104,10 @@ always @(posedge clk) begin
 end
 
 // =====================================================
-// DATA RAM
+// DATA RAM - IHP 256x8 SRAM MACRO
 // =====================================================
 
-reg [7:0] RAM [0:255];
-reg [7:0] ram_data;
+wire [7:0] ram_data;
 
 reg [7:0] ram_address;
 reg [7:0] ram_write_data;
@@ -124,7 +123,7 @@ assign ram_write_enable =
     (state == MEM_WRITE) ||
     (state == STACK_PUSH);
 
-// RAM address selection
+// RAM address and write-data selection
 
 always @(*) begin
     ram_address = 8'h00;
@@ -159,18 +158,29 @@ always @(*) begin
     end
 end
 
-// Synchronous RAM
+// IHP SG13G2 256x8 SRAM
 
-always @(posedge clk) begin
+RM_IHPSG13_1P_256x8_c3_bm_bist data_ram (
+    .A_CLK(clk),
+    .A_MEN(ram_read_enable | ram_write_enable),
+    .A_WEN(ram_write_enable),
+    .A_REN(ram_read_enable),
+    .A_ADDR(ram_address),
+    .A_DIN(ram_write_data),
+    .A_DLY(1'b1),
+    .A_DOUT(ram_data),
+    .A_BM(8'hFF),
 
-    if (ram_write_enable)
-        RAM[ram_address] <= ram_write_data;
-
-    if (ram_read_enable)
-        ram_data <= RAM[ram_address];
-
-end
-
+    // BIST disabled
+    .A_BIST_CLK(1'b0),
+    .A_BIST_EN(1'b0),
+    .A_BIST_MEN(1'b0),
+    .A_BIST_WEN(1'b0),
+    .A_BIST_REN(1'b0),
+    .A_BIST_ADDR(8'h00),
+    .A_BIST_DIN(8'h00),
+    .A_BIST_BM(8'h00)
+);
 // =====================================================
 // ALU INPUTS
 // =====================================================
