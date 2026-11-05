@@ -16,6 +16,7 @@ project:
   source_files:
     - "project.v"
     - "tiny8_top.v"
+    - "sram_bb.v"
 
 pinout:
   # Inputs
