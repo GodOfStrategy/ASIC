@@ -30,37 +30,7 @@
   "//": "If you need a custom clock configuration, read the following documentation first:",
   "//": "https://tinytapeout.com/faq/#how-can-i-map-an-additional-external-clock-to-one-of-the-gpios",
   "CLOCK_PORT": "clk",
-    "MACROS": {
-    "RM_IHPSG13_1P_256x8_c3_bm_bist": {
-      "instances": {
-        "cpu.data_ram": {
-          "location": [80, 100],
-          "orientation": "N"
-        }
-      },
-      "gds": [
-        "pdk_dir::libs.ref/sg13g2_sram/gds/RM_IHPSG13_1P_256x8_c3_bm_bist.gds"
-      ],
-      "lef": [
-        "pdk_dir::libs.ref/sg13g2_sram/lef/RM_IHPSG13_1P_256x8_c3_bm_bist.lef"
-      ],
-      "lib": {
-        "nom_*": [
-          "pdk_dir::libs.ref/sg13g2_sram/lib/RM_IHPSG13_1P_256x8_c3_bm_bist_typ_1p20V_25C.lib"
-        ],
-        "min_*": [
-          "pdk_dir::libs.ref/sg13g2_sram/lib/RM_IHPSG13_1P_256x8_c3_bm_bist_fast_1p32V_m55C.lib"
-        ],
-        "max_*": [
-          "pdk_dir::libs.ref/sg13g2_sram/lib/RM_IHPSG13_1P_256x8_c3_bm_bist_slow_1p08V_125C.lib"
-        ]
-      }
-    }
-  },
-  "PDN_MACRO_CONNECTIONS": [
-    "cpu.data_ram VDD VSS VDD! VSS!",
-    "cpu.data_ram VDD VSS VDDARRAY! VSS!"
-  ],
+   
 
   "//": "Configuration docs: https://librelane.readthedocs.io/en/latest/reference/configuration.html",
   "//": "IHP SG13G2 256x8 SRAM macro integration",
