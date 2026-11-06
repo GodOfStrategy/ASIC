@@ -9,7 +9,7 @@ project:
   clock_hz: 12000000
 
   # Initial area target. We will validate this during hardening.
-  tiles: "1x2"
+  tiles: "2x2"
 
   top_module: "tt_um_godofstrategy_tiny8"
 
