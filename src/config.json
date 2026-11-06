@@ -44,7 +44,7 @@
       "instances": {
         "cpu.data_ram": {
           "location": [3.36, 3.78],
-          "orientation": "E"
+          "orientation": "FS"
         }
       },
       "gds": [
